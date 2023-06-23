@@ -7,16 +7,24 @@ include 'includes/header.php';
 $pid='';
 if(isset($_GET['pid'])){
     $pid = $_GET['pid'];
+}else{
+    $pid = '';
 }
-if(isset($_POST['pid']) && $_POST['pid'] != ''){
-    $pid = $_POST['pid'];
-    $diagnosis = $_POST['diagnosis'];
-    $prescription = $_POST['prescription'];
-    $url = "https://apis.stmorg.in/medical/records/add_records?pid=".$pid."&diagnosis=".$diagnosis."&prescription=".$prescription;
-    $data = get_api_data($url);
-    $data = json_decode($data, true);
-    $data = $data['data'];
+// send both $_POST and $_FILES via api
+if (isset($_POST['pid']) && $_POST['pid'] != '') {
+    $post = $_POST;
+    $files = $_FILES['prescriptionfile'];
+    $url = 'https://apis.stmorg.in/medical/records/add_records';
+    $output = get_api_data_post($url, $post, $files);
+    $output = json_decode($output, true);
+    if ($output['status'] == 'success') {
+        echo '<script>alert("Record Added Successfully");</script>';
+    } else {
+        echo '<script>alert("Record Not Added");</script>';
+    }
 }
+
+
 ?>
 <!-- partial -->
 <div class="main-panel">
@@ -43,11 +51,16 @@ if(isset($_POST['pid']) && $_POST['pid'] != ''){
                 <div class="card-body">
                     <h4 class="card-title">Add Medical Record</h4>
                     <p class="card-description"> For proffesional use only </p>
-                    <form class="forms-sample" method="POST">
+                    <form class="forms-sample" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleInputUsername1">Patient Id</label>
                             <input type="text" class="form-control" name="pid" id="exampleInputUsername1"
                                 placeholder="Patient Id" value="<?php echo $pid; ?>" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Doctor Id</label>
+                            <input type="text" class="form-control" name="doctor" id="exampleInputUsername1"
+                                placeholder="Doctor Id" />
                         </div>
 
                         <div class="form-group">
@@ -59,6 +72,12 @@ if(isset($_POST['pid']) && $_POST['pid'] != ''){
                             <textarea class="form-control" name="prescription" id="exampleTextarea2"
                                 rows="6"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label>File upload</label>
+                            <input type="file" name="prescriptionfile" />
+                        </div>
+
+
                         <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>
                     </form>

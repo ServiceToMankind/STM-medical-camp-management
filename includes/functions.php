@@ -17,13 +17,30 @@ function get_api_data($url){
   curl_close($ch);
   return $output;
 }
-function get_api_data_post($url,$data){
+function get_api_data_post($url, $postData, $fileData) {
   $ch = curl_init();
+  
+  // Prepare the POST data
+  $postData['prescriptionfile'] = new CURLFile($fileData['tmp_name'], $fileData['type'], $fileData['name']);
+
+  // Set the CURL options
   curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  
   $output = curl_exec($ch);
+  
+  // Check for CURL errors
+  if (curl_errno($ch)) {
+    echo 'CURL Error: ' . curl_error($ch);
+  }
+  
   curl_close($ch);
+  
   return $output;
 }
+
+
+
 ?>
