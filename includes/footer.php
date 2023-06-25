@@ -5,9 +5,8 @@
                 2023</span>
             <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com
                 2021</span>
-            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">
-                <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin
-                    template</a></span>
+            <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Sponsored by
+                <a href="https://weber.cottonseeds.org" target="_blank">Weber Technologies</a></span>
         </div>
     </footer>
     <!-- partial -->

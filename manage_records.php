@@ -1,8 +1,4 @@
 <?php
-// show errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include 'includes/header.php';
 $pid='';
 if(isset($_GET['pid'])){
@@ -23,8 +19,6 @@ if (isset($_POST['pid']) && $_POST['pid'] != '') {
         echo '<script>alert("Record Not Added");</script>';
     }
 }
-
-
 ?>
 <!-- partial -->
 <div class="main-panel">
@@ -55,29 +49,46 @@ if (isset($_POST['pid']) && $_POST['pid'] != '') {
                         <div class="form-group">
                             <label for="exampleInputUsername1">Patient Id</label>
                             <input type="text" class="form-control" name="pid" id="exampleInputUsername1"
-                                placeholder="Patient Id" value="<?php echo $pid; ?>" />
+                                placeholder="Patient Id" value="<?php echo $pid; ?>" required />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputUsername1">Doctor Id</label>
-                            <input type="text" class="form-control" name="doctor" id="exampleInputUsername1"
-                                placeholder="Doctor Id" />
+                            <select class="form-control" name="doctor" id="exampleInputUsername1" required>
+                                <option value="">Select Doctor</option>
+                                <?php
+                                $url = 'https://apis.stmorg.in/medical/doctors/doctors';
+                                $output = get_api_data($url);
+                                $output = json_decode($output, true);
+                                foreach ($output['data'] as $key => $value) {
+                                    echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleTextarea1">Diagnosis</label>
-                            <textarea class="form-control" name="diagnosis" id="exampleTextarea1" rows="6"></textarea>
+                            <select class="form-control" name="diagnosis" id="exampleTextarea1" required>
+                                <option value="">Select Diagnosis</option>
+                                <?php
+                                $url = 'https://apis.stmorg.in/medical/diagnosis/diagnosis';
+                                $output = get_api_data($url);
+                                $output = json_decode($output, true);
+                                foreach ($output['data'] as $key => $value) {
+                                    echo '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleTextarea2">Prescription</label>
-                            <textarea class="form-control" name="prescription" id="exampleTextarea2"
-                                rows="6"></textarea>
+                            <textarea class="form-control" name="prescription" id="exampleTextarea2" rows="6"
+                                required></textarea>
                         </div>
                         <div class="form-group">
                             <label>File upload</label>
-                            <input type="file" name="prescriptionfile" />
+                            <input type="file" name="prescriptionfile" required />
                         </div>
-
-
                         <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>
                     </form>

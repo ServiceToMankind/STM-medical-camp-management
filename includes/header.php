@@ -23,7 +23,7 @@ if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
     <!-- inject:css -->
     <!-- endinject -->
     <!-- ovveride css -->
-    <link rel="stylesheet" href="assets/css/custom_override.css" />
+    <link rel="stylesheet" href="assets/css/custom_override.css?v=1" />
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -66,7 +66,7 @@ if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">Pranay Kiran</p>
+                                <p class="mb-1 text-black"><?php echo $_SESSION['NAME']; ?></p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -105,7 +105,7 @@ if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
                                 <!--change to offline or busy as needed-->
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
-                                <span class="font-weight-bold mb-2">Pranay Kiran</span>
+                                <span class="font-weight-bold mb-2"><?php echo $_SESSION['NAME']; ?></span>
                                 <span class="text-secondary text-small">Secretary</span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>

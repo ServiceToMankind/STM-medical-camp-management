@@ -53,8 +53,7 @@ if(isset($_GET['pquery'])){
 
                     <?php 
                     if(isset($data)){
-                        foreach ($data as $row) {
-                    ?>
+                        ?>
                     <div class="row">
                         <div class="col-12 grid-margin">
                             <div class="card">
@@ -65,8 +64,6 @@ if(isset($_GET['pquery'])){
                                             <thead>
                                                 <tr>
                                                     <th>Record Id</th>
-                                                    <!-- <th>Name</th>
-                                                    <th>Age</th> -->
                                                     <th>Diagnosis</th>
                                                     <th>Prescription</th>
                                                     <th>Doctor</th>
@@ -75,14 +72,21 @@ if(isset($_GET['pquery'])){
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- pranay Grahambell -->
-                                                <tr>
+                                                <?php
+                        foreach ($data as $row) {
+                    ?>
+                                                <tr
+                                                    onclick="window.location.href='recordview?id=<?php echo $row['id']; ?>'">
                                                     <td><?php echo $row['id']; ?></td>
                                                     <td><?php echo $row['diagnosis']; ?></td>
                                                     <td><?php echo $row['prescription']; ?></td>
                                                     <td><?php echo $row['doctor']; ?></td>
                                                     <td><?php echo $row['last_visit']; ?></td>
+
                                                 </tr>
+                                                <?php
+                        }
+                    ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -91,7 +95,6 @@ if(isset($_GET['pquery'])){
                         </div>
                     </div>
                     <?php
-                        }
                     }else{
                         echo "No Data Found";
                     }
