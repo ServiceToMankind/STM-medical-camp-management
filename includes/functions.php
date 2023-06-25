@@ -17,11 +17,15 @@ function get_api_data($url){
   curl_close($ch);
   return $output;
 }
-function get_api_data_post($url, $postData, $fileData) {
+function get_api_data_post($url, $postData, $fileData='') {
   $ch = curl_init();
   
   // Prepare the POST data
-  $postData['prescriptionfile'] = new CURLFile($fileData['tmp_name'], $fileData['type'], $fileData['name']);
+  if ($fileData == '') {
+    $postData = http_build_query($postData);
+  } else {
+    $postData = array_merge($postData, array('prescriptionfile' => new CURLFile($fileData['tmp_name'], $fileData['type'], $fileData['name'])));
+  }
 
   // Set the CURL options
   curl_setopt($ch, CURLOPT_URL, $url);
