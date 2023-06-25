@@ -1,8 +1,4 @@
 <?php
-// show errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include 'includes/header.php';
 if(isset($_GET['id'])){
     $rid = $_GET['id'];
@@ -15,6 +11,16 @@ if(isset($_GET['id'])){
     $pdata = get_api_data($url);
     $pdata = json_decode($pdata, true);
     $pdata = $pdata['data'];
+    $doctor = $data[0]['doctor'];
+    $url = "https://apis.stmorg.in/medical/doctors/doctors?did=".$doctor;
+    $ddata = get_api_data($url);
+    $ddata = json_decode($ddata, true);
+    $ddata = $ddata['data'];
+    $diag = $data[0]['diagnosis'];
+    $url = "https://apis.stmorg.in/medical/diagnosis/diagnosis?did=".$diag;
+    $diagdata = get_api_data($url);
+    $diagdata = json_decode($diagdata, true);
+    $diagdata = $diagdata['data'];
 }
 ?>
 <!-- partial -->
@@ -45,19 +51,19 @@ if(isset($_GET['id'])){
                     <!-- Full Record  -->
                     <div class="viewrecord">
                         <div class="viewrecordid">
-                            <p><b>Patient Id:</b> <?php echo $data[0]['pid']; ?></p>
-                            <p><b>Record Id:</b> <?php echo $data[0]['id']; ?></p>
+                            <p><b>Patient Id :</b> <?php echo $data[0]['pid']; ?></p>
+                            <p><b>Record Id :</b> <?php echo $data[0]['id']; ?></p>
                         </div>
-                        <p><b>Patient Name:</b> <?php echo $pdata[0]['name']; ?></p>
-                        <p><b>Diagnosis:</b> <?php echo $data[0]['diagnosis']; ?></p>
-                        <p><b>Prescription:</b> <?php echo $data[0]['prescription']; ?></p>
+                        <p><b>Patient Name :</b> <?php echo $pdata[0]['name']; ?></p>
+                        <p><b>Diagnosis :</b> <?php echo $diagdata[0]['name'] ?></p>
+                        <p><b>Prescription :</b> <?php echo $data[0]['prescription']; ?></p>
+                        <p><b>Doctor :</b> <?php echo $ddata[0]['name'] ?></p>
+                        <p><b>Date :</b> <?php echo $data[0]['last_visit']; ?></p>
                         <div class="recordviewimg">
-                            <p><b>Prescription Image:</b> </p>
+                            <p><b>Prescription Image :</b> </p>
                             <img src="https://storage.googleapis.com/weber_storage/<?php echo $data[0]['prescription_image']; ?>"
                                 alt="Prescription Image" width="90%">
                         </div>
-                        <p><b>Doctor:</b> <?php echo $data[0]['doctor']; ?></p>
-                        <p><b>Last Visit:</b> <?php echo $data[0]['last_visit']; ?></p>
 
                     </div>
 
