@@ -5,6 +5,7 @@ if(isset($_POST['name']) && isset($_POST['pass'])){
 
     $name=$_POST['name'];
     $pass=$_POST['pass'];
+    $camp_id = $_POST['camp'];
 
     $data=get_api_data("https://apis.stmorg.in/common/login?username=".$name."&password=".$pass);
     $data=json_decode($data,true);
@@ -19,6 +20,7 @@ if(isset($_POST['name']) && isset($_POST['pass'])){
     $_SESSION['NAME']=$user_data['name'];
     $_SESSION['EMAIL']=$user_data['mail'];
     $_SESSION['ROLE_ID']=$user_data['role'];
+    $_SESSION['CAMP_ID']=$camp_id;
 
     if($_SESSION['ROLE_ID']!=''){
         $role_id=$_SESSION['ROLE_ID'];
@@ -79,6 +81,26 @@ if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
                             <h4>STM Medical Management System</h4>
                             <h6 class="font-weight-light">Sign in to continue.</h6>
                             <form class="pt-3" method="POST">
+                                <div class="form-group">
+                                    <select class="form-control" name="camp">
+                                        <option value="">Select Camp</option>
+                                        <?php
+                                            $data=get_api_data("https://apis.stmorg.in/medical/camps/camps");
+                                            $data=json_decode($data,true);
+                                            // Check for API errors
+                                            // if ($data['status'] !== "success") {
+                                            //     echo "API error: " . $data['data'];
+                                            //     exit;
+                                            // }
+                                            // Get payment logs data
+                                            $camp_data = $data['data'];
+                                            foreach($camp_data as $camp){
+                                                echo "<option value='".$camp['id']."'>".$camp['camp_name']."</option>";
+                                            }
+
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
                                         placeholder="Email" name="name">

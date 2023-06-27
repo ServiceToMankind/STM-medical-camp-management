@@ -42,7 +42,15 @@ include 'includes/header.php';
                             Total Camps
                             <i class="mdi mdi-heart mdi-24px float-right"></i>
                         </h4>
-                        <h2 class="mb-5">0</h2>
+                        <h2 class="mb-5">
+                            <?php
+                                $url = "https://apis.stmorg.in/medical/camps/camps?count=true";
+                                $data = get_api_data($url);
+                                $data = json_decode($data, true);
+                                $data = $data['data'];
+                                echo $data[0]['count'];
+                            ?>
+                        </h2>
                         <h6 class="card-text">Decreased by 10%</h6>
                     </div>
                 </div>
@@ -57,70 +65,41 @@ include 'includes/header.php';
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Blood Group</th>
-                                        <th>Status</th>
-                                        <th>Last Update</th>
-                                        <th>Verified By</th>
-                                        <th>Tracking ID</th>
+                                        <th>Record Id</th>
+                                        <th>Diagnosis</th>
+                                        <th>Prescription</th>
+                                        <th>Doctor</th>
+                                        <th>Last Visit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- pranay Grahambell -->
-                                    <tr>
-                                        <td>Pranay Grahambell</td>
-                                        <td>B+</td>
-                                        <td>
-                                            <label class="badge badge-gradient-success">DONE</label>
-                                        </td>
-                                        <td>Dec 5, 2017</td>
-                                        <td>Shivani Chowdarapu</td>
-                                        <td>WD-12345</td>
+                                    <?php
+                                        $url = "https://apis.stmorg.in/medical/records/records";
+                                        $data = get_api_data($url);
+                                        $data = json_decode($data, true);
+                                        $data = $data['data'];
+                        foreach ($data as $row) {
+                                        $doctor = $row['doctor'];
+                                        $url = "https://apis.stmorg.in/medical/doctors/doctors?did=".$doctor;
+                                        $ddata = get_api_data($url);
+                                        $ddata = json_decode($ddata, true);
+                                        $ddata = $ddata['data'];
+                                        $diag = $row['diagnosis'];
+                                        $url = "https://apis.stmorg.in/medical/diagnosis/diagnosis?did=".$diag;
+                                        $diagdata = get_api_data($url);
+                                        $diagdata = json_decode($diagdata, true);
+                                        $diagdata = $diagdata['data'];
+                    ?>
+                                    <tr onclick="window.location.href='recordview?id=<?php echo $row['id']; ?>'">
+                                        <td>STMR<?php echo $row['id']; ?></td>
+                                        <td><?php echo $diagdata[0]['name'] ?></td>
+                                        <td><?php echo $row['prescription']; ?></td>
+                                        <td><?php echo $ddata[0]['name'] ?></td>
+                                        <td><?php echo $row['last_visit']; ?></td>
                                     </tr>
-                                    <!-- Revanth kumar -->
-                                    <tr>
-                                        <td>Revanth Kumar</td>
-                                        <td>O+</td>
-                                        <td>
-                                            <label class="badge badge-gradient-warning">PENDING</label>
-                                        </td>
-                                        <td>Dec 12, 2017</td>
-                                        <td>Shivani Chowdarapu</td>
-                                        <td>WD-12346</td>
-                                    </tr>
-                                    <!-- Jyoshna chari  -->
-                                    <tr>
-                                        <td>Jyoshna Chari</td>
-                                        <td>A+</td>
-                                        <td>
-                                            <label class="badge badge-gradient-warning">PENDING</label>
-                                        </td>
-                                        <td>Dec 14, 2017</td>
-                                        <td>Shivani Chowdarapu</td>
-                                        <td>WD-12347</td>
-                                    </tr>
-                                    <!-- Surya kumar -->
-                                    <tr>
-                                        <td>Surya Kumar</td>
-                                        <td>B+</td>
-                                        <td>
-                                            <label class="badge badge-gradient-success">DONE</label>
-                                        </td>
-                                        <td>Dec 15, 2017</td>
-                                        <td>Shivani Chowdarapu</td>
-                                        <td>WD-12348</td>
-                                    </tr>
-                                    <!-- Geetha siri  -->
-                                    <tr>
-                                        <td>Geetha Siri</td>
-                                        <td>O+</td>
-                                        <td>
-                                            <label class="badge badge-gradient-warning">PENDING</label>
-                                        </td>
-                                        <td>Dec 18, 2017</td>
-                                        <td>Shivani Chowdarapu</td>
-                                        <td>WD-12349</td>
-                                    </tr>
+                                    <?php
+                        }
+                    ?>
                                 </tbody>
                             </table>
                         </div>
