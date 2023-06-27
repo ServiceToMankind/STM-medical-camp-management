@@ -18,6 +18,23 @@ if(isset($_POST['name']) && isset($_POST['pass'])){
     $_SESSION['ID']=$user_data['id'];
     $_SESSION['NAME']=$user_data['name'];
     $_SESSION['EMAIL']=$user_data['mail'];
+    $_SESSION['ROLE_ID']=$user_data['role'];
+
+    if($_SESSION['ROLE_ID']!=''){
+        $role_id=$_SESSION['ROLE_ID'];
+        $data=get_api_data("https://apis.stmorg.in/global/roles?role=".$role_id);
+        $data=json_decode($data,true);
+        // Check for API errors
+        if ($data['status'] !== "success") {
+            echo "API error: " . $data['data'];
+            exit;
+        }
+        // Get payment logs data
+        $role_data = $data['data'];
+        // print_r($role_data);
+        // die();
+        $_SESSION['ROLE_NAME']=$role_data[0]['role-name'];
+    }
 
 }
 if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
