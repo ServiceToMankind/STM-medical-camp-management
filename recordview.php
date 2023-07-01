@@ -61,10 +61,15 @@ if(isset($_GET['id'])){
                         <p><b>Date :</b> <?php echo $data[0]['last_visit']; ?></p>
                         <div class="recordviewimg">
                             <p><b>Prescription Image :</b> </p>
-                            <img src="https://storage.googleapis.com/weber_storage/<?php echo $data[0]['prescription_image']; ?>"
-                                alt="Prescription Image" width="90%">
+                            <img src="<?php echo $data[0]['prescription_image']; ?>" alt="Prescription Image"
+                                width="90%">
                         </div>
 
+                    </div>
+                    <!-- print button  -->
+                    <div class="printbtn">
+                        <a href="recordprint.php?id=<?php echo $rid; ?>" target="_blank"
+                            class="btn btn-gradient-primary">Print</a>
                     </div>
 
                 </div>
