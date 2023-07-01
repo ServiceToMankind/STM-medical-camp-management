@@ -44,12 +44,56 @@ if(isset($_GET['id'])){
     <!-- End layout styles -->
     <link rel="shortcut icon" href="assets/images/favicon.ico" />
 
-    <script>
+    <!-- <script>
     window.onload = function() {
         window.print();
     }
-    </script>
+    </script> -->
     <style>
+    /* import local fonts */
+    @font-face {
+        font-family: "MaShanZheng";
+        src: url("./assets/fonts/MaShanZheng-Regular.ttf");
+    }
+
+    @font-face {
+        font-family: "Bangers";
+        src: url("./assets/fonts/Bangers-Regular.ttf");
+        font-weight: bold;
+    }
+
+    .nav-logo img {
+        padding: 0.5em;
+        width: 3.5em;
+        height: 3.5em;
+    }
+
+    .nav-logo {
+        display: flex;
+        width: 45%;
+    }
+
+    .nav-logo .brand-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .nav-logo .brand-title h1 {
+        font-size: 2em;
+        font-family: MaShanZheng;
+        font-weight: 100;
+        margin: 0;
+    }
+
+    .nav-logo .brand-title p {
+        font-size: 0.8em;
+        font-family: Bangers;
+        margin: 0;
+        text-align: right;
+        font-weight: bold;
+    }
+
     body {
         height: 100vh;
     }
@@ -86,10 +130,19 @@ if(isset($_GET['id'])){
 </head>
 
 <body>
-    <header style="text-align: center;     height: 12vh;">
-        <img src="assets/arundhati/header.jpg" alt="Lights">
+    <header style="display: flex;
+    justify-content: space-between;
+    margin: 0 2em;">
+        <img src="assets/arundhati/header.jpg" style="width: 45%;">
+        <div class="nav-logo">
+            <img src="assets/images/logoui.svg" alt="STM logo" />
+            <div class="brand-title">
+                <h1>Service To Mankind</h1>
+                <p>Love All, Serve All</p>
+            </div>
+        </div>
     </header>
-    <main style="margin: auto 10%;margin-top: 0.1em;">
+    <main style="margin: auto 10%;margin-top: 1.2em;">
         <p style="text-align: center;
     font-style: italic;">The following camp was conducted by Service to Mankind (https://stmorg.in)</p>
         <div class="viewrecord top">
