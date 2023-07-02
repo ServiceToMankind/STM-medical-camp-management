@@ -47,6 +47,7 @@ if(isset($_GET['id'])){
     <script>
     window.onload = function() {
         window.print();
+        window.close();
     }
     </script>
     <style>
