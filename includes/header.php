@@ -145,6 +145,9 @@ if(isset($_SESSION['ID']) && $_SESSION['ID']!=''){
                         <div class="collapse" id="ui-basic2">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="all_records">View All Records</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="view_records">View Records</a>
                                 </li>
                                 <li class="nav-item">
